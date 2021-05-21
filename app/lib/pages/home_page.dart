@@ -8,14 +8,10 @@ import '../services/signalr_service.dart';
 class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    final authService = Provider.of<AuthService>(context);
     final signalrService = Provider.of<SignalrService>(context);
+    final authService = Provider.of<AuthService>(context);
 
-    signalrService.connection!.on('metodo-en-telefono-logout', (arguments) {
-      print('Forzando logout');
-      authService.logout();
-      Navigator.pushReplacementNamed(context, 'login');
-    });
+    signalrService.configurarCierreAutomatico(context);
 
     return Scaffold(
         appBar: AppBar(
@@ -37,6 +33,11 @@ class HomePage extends StatelessWidget {
                     Navigator.pushReplacementNamed(context, 'login');
                   },
                   child: Text('Logout')),
+              ElevatedButton(
+                  onPressed: () async {
+                    Navigator.pushReplacementNamed(context, 'pagina2');
+                  },
+                  child: Text('Abrir otra página')),
             ],
           ),
         ));

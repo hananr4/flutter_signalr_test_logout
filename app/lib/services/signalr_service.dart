@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:http/io_client.dart';
+import 'package:provider/provider.dart';
 import 'package:signalr_core/signalr_core.dart';
 
 import '../global/enviroment.dart';
@@ -65,6 +66,18 @@ class SignalrService with ChangeNotifier {
     await this._connection!.stop();
     this.serverStatus = ServerStatus.Offline;
     notifyListeners();
+  }
+
+  void configurarCierreAutomatico(BuildContext context) {
+    final authService = Provider.of<AuthService>(context);
+
+    this.connection!.off('metodo-en-telefono-logout');
+
+    this.connection!.on('metodo-en-telefono-logout', (arguments) {
+      print('Forzando logout');
+      authService.logout();
+      Navigator.pushReplacementNamed(context, 'login');
+    });
   }
 }
 

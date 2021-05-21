@@ -7,10 +7,23 @@ import './pages/login_page.dart';
 
 import './services/signalr_service.dart';
 import './services/auth_service.dart';
+import 'pages/Pagina2Page.dart';
 
 void main() => runApp(MyApp());
 
-class MyApp extends StatelessWidget {
+class MyApp extends StatefulWidget {
+  @override
+  _MyAppState createState() => _MyAppState();
+}
+
+class _MyAppState extends State<MyApp> {
+  final _navigatorKey = GlobalKey<NavigatorState>();
+
+  @override
+  void initState() {
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -24,9 +37,11 @@ class MyApp extends StatelessWidget {
           'home': (_) => HomePage(),
           'loading': (_) => LoadingPage(),
           'login': (_) => LoginPage(),
+          'pagina2': (_) => Pagina2Page(),
         },
         initialRoute: 'loading',
         title: 'Material App',
+        navigatorKey: _navigatorKey,
       ),
     );
   }
